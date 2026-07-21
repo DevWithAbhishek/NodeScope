@@ -1,8 +1,7 @@
-import express, { type Express, type Request, type Response } from 'express';
+import app from "./app.js";
 
-const app: Express = express();
+const PORT = process.env.PORT || 3000;
 
-// respond with "hello world" when a GET request is made to the homepage
-app.get('/', (req: Request, res: Response) => {
-    res.send('hello world');
-});
+app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
+})

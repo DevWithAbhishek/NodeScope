@@ -57,3 +57,196 @@ res.status(500).json({ error: 'message' });
 ```
 
 ---
+## app.ts vs server.ts
+
+- **app.ts** only answers: "What is my HTTP application, and how should it process requests?"
+
+- It configures:
+  ```typescript
+                Express instance
+                    │
+                    ├── Middleware
+                    │     ├── JSON parsing
+                    │     ├── CORS
+                    │     ├── Logging
+                    │     └── Authentication
+                    │
+                    ├── Routes
+                    │     ├── /users
+                    │     ├── /orders
+                    │     └── /incidents
+                    │
+                    └── Error handling
+  ```
+
+- **server.ts**: "Start this application and make it available to the outside world." Typically it looks like:
+    ```typescript
+    import app from "./app";
+
+    const PORT = process.env.PORT || 3000;
+
+    app.listen(PORT, () => {
+      console.log(`Server running on port ${PORT}`);
+    });
+    ```
+
+- server.ts owns the process lifecycle:
+  ```typescript
+                Process starts
+                      ↓
+                Load configuration
+                      ↓
+                Connect database
+                      ↓
+                Connect Redis / queues
+                      ↓
+                Start HTTP listener
+                      ↓
+                Application serves traffic
+                      ↓
+                Shutdown signal received
+                      ↓
+                Stop accepting requests
+                      ↓
+                Close dependencies
+                      ↓
+                Process exits
+  ```
+
+- The problem of using one file appears when we want to use the Express application without starting a real server, eg. Testing. 
+
+- Startup looks approximately like:
+  ```typescript
+                      server.ts
+                        │
+                        │ imports
+                        ▼
+                      app.ts
+                        │
+                        ├── create Express app
+                        ├── register middleware
+                        ├── register routes
+                        └── export app
+                        │
+                        ▼
+                      server.ts receives app
+                        │
+                        ▼
+                      app.listen(PORT)
+                        │
+                        ▼
+                      HTTP server begins listening
+  ```
+
+- Then a request arrives:
+  ```typescript
+                      Client
+                        │
+                        │ GET /api/incidents
+                        ▼
+                      Port 3000
+                        │
+                        ▼
+                      HTTP Server
+                        │
+                        ▼
+                      Express app
+                        │
+                        ├── middleware
+                        ▼
+                      router
+                        ▼
+                      controller
+                        ▼
+                      service
+                        ▼
+                      database
+                        │
+                        ▼
+                      response
+  ```
+
+- server.ts is mainly important during startup and shutdown. It does not normally contain your request-processing logic.  
+Once the server is running, requests are handled by the application configured in app.ts.
+
+- Responsibilities:
+  ```typescript
+      app.ts
+      ────────────────────
+      HTTP behavior
+
+      Middleware
+      Routes
+      Error handlers
+      Request processing
+
+
+      server.ts
+      ────────────────────
+      Runtime lifecycle
+
+      Environment/config
+      DB connection
+      Redis connection
+      Start listening
+      Graceful shutdown
+      Process signals
+  ```
+
+- Example:
+  ```typescript
+      server.ts
+        │
+        ├── initialize PostgreSQL
+        ├── initialize Redis
+        ├── initialize observability
+        ├── start HTTP server
+        └── graceful shutdown
+                  ↓
+      app.ts
+        │
+        ├── security middleware
+        ├── authentication
+        ├── incident routes
+        ├── SLA routes
+        ├── admin routes
+        └── error handling
+  ```
+
+- app.ts = APPLICATION CONSTRUCTION   
+         = "What does my HTTP application do?"
+
+- server.ts = APPLICATION BOOTSTRAP / RUNTIME  
+            = "How does this process initialize, start,
+listen, and eventually shut down?"
+
+- Mental Model:
+  ```typescript
+                          app.ts
+                            │
+                  Configure application
+                            │
+                ┌───────────┼───────────┐
+                ▼           ▼           ▼
+          Middleware      Routes    Error handling
+                            │
+                            ▼
+                      export app
+                            │
+                            ▼
+                        server.ts
+                            │
+                  Initialize runtime
+                            │
+                DB / Redis / Config
+                            │
+                            ▼
+                      app.listen(PORT)
+                            │
+                            ▼
+                      Accept traffic
+  ```
+
+---
+
+---
