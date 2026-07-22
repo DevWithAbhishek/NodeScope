@@ -70,8 +70,23 @@ console.log(memoryUsage());
 ---
 
 ## process.env
-returns an object containing the user environment. On Windows operating systems, environment variables are case-insensitive.([process.env](https://nodejs.org/docs/latest/api/process.html#processenv))
+- returns an object containing the user environment. On Windows operating systems, environment variables are case-insensitive.([process.env](https://nodejs.org/docs/latest/api/process.html#processenv))
 
+- Mental model 🧠
+```typescript
+Date.now()
+= 🕐 CLOCK ON THE WALL
+
+"What time did the request arrive?"
+
+
+process.hrtime.bigint()
+= ⏱️ STOPWATCH
+
+"How long did the request take?"
+```
+
+- And for req: **JavaScript** allows us to add a custom property to req; TypeScript rejects it unless the Request type also declares that property.
 
 
 
