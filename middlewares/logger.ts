@@ -1,5 +1,6 @@
 import { type Request, type Response, type NextFunction } from 'express';
 import process from "node:process";
+import myEvents  from '../lib/events.js';
 
 const logger = function (req: Request, res: Response, next: NextFunction) {
     const startedAt = Date.now();
@@ -9,7 +10,7 @@ const logger = function (req: Request, res: Response, next: NextFunction) {
         const endTime = process.hrtime.bigint();
         const duration_ms = Number(endTime - startTime) / 1_000_000;
 
-        console.log({
+        const requestData = {
             method: req.method,
             path: req.originalUrl,
             status: res.statusCode,
@@ -17,8 +18,10 @@ const logger = function (req: Request, res: Response, next: NextFunction) {
             userAgent: req.get("user-agent"),
             ip: req.ip,
             duration_ms: duration_ms.toFixed(3) + " ms"
-        })
-    })
+        };
+
+        myEvents.emit("request:completed", requestData);
+    });
 
     next();
 };

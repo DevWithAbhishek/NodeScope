@@ -64,5 +64,18 @@ Whereas ***"tsc"*** solves a build problem: "Produce the JavaScript artifact tha
 
 ---
 
+```javascript
+    lib: ["ES2022"]
+        ↓
+    "What STANDARD JAVASCRIPT APIs exist?"
+
+
+    types: ["node"]
+        ↓
+    "What ENVIRONMENT/PLATFORM-specific types
+    should be globally available?"
+```
+
+---
 
 ---

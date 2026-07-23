@@ -9,6 +9,11 @@ router.get("/", (req, res) => {
     console.log("Hello - Welcome to the System");
     res.send("Bye Bye");
 })
+//home page
+router.get("/:id", (req, res) => {
+    console.log(req.query);
+    res.send(`Hello man with id: ${req.params.id}`);
+})
 
 // Returns an array of objects containing information about each logical CPU core.
 router.get("/cpus", (req, res) => {
