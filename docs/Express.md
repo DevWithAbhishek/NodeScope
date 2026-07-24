@@ -248,5 +248,63 @@ listen, and eventually shut down?"
   ```
 
 ---
+## req.pipe()
 
+```
+            req
+            │
+            │ FAST
+            ▼
+            pipe()
+            │
+            ├── writeStream ready?
+            │       YES → continue
+            │
+            └── writeStream overloaded?
+                    ↓
+                  pause source
+                    ↓
+                  wait for drain
+                    ↓
+                  resume
+```
+---
+## req.on()
+
+```
+                Client sending request body
+
+                chunk 1 arrives
+                      ↓
+                req emits "data"
+                      ↓
+                callback(chunk)
+
+
+                chunk 2 arrives
+                      ↓
+                req emits "data"
+                      ↓
+                callback(chunk)
+
+
+                last chunk
+                      ↓
+                req emits "end"
+                      ↓
+                callback()
+```
+---
+## req object
+
+| API               | Comes primarily from            | Purpose                                 |
+| ----------------- | ------------------------------- | --------------------------------------- |
+| `req.on()`        | EventEmitter/stream inheritance | Listen for events                       |
+| `req.pipe()`      | Readable Stream                 | Stream body into a writable destination |
+| `req.method`      | Node HTTP request               | HTTP method                             |
+| `req.headers`     | Node HTTP request               | Raw headers                             |
+| `req.params`      | Express                         | Route parameters                        |
+| `req.query`       | Express                         | Parsed query parameters                 |
+| `req.get()`       | Express                         | Convenient header lookup                |
+| `req.originalUrl` | Express                         | Original requested URL                  |
 ---

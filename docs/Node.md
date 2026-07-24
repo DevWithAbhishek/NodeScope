@@ -255,3 +255,135 @@ process.hrtime.bigint()
   });
   ```
 ---
+## Buffer
+- Buffer objects are used to represent a fixed-length sequence of bytes. The Buffer class is a subclass of JavaScript's <Uint8Array> class and extends it with methods that cover additional use cases.
+
+  ``` javascript
+  import { Buffer } from 'node:buffer';
+
+  // Creates a zero-filled Buffer of length 10.
+  const buf1 = Buffer.alloc(10);
+
+  // Creates a Buffer of length 10,
+  // filled with bytes which all have the value `1`.
+  const buf2 = Buffer.alloc(10, 1);
+
+  // Creates an uninitialized buffer of length 10.
+  // This is faster than calling Buffer.alloc() but the returned
+  // Buffer instance might contain old data that needs to be
+  // overwritten using fill(), write(), or other functions that fill the Buffer's
+  // contents.
+  const buf3 = Buffer.allocUnsafe(10);
+
+  // Creates a Buffer containing the bytes [1, 2, 3].
+  const buf4 = Buffer.from([1, 2, 3]);
+
+  // Creates a Buffer containing the bytes [1, 1, 1, 1] – the entries
+  // are all truncated using `(value & 255)` to fit into the range 0–255.
+  const buf5 = Buffer.from([257, 257.5, -255, '1']);
+
+  // Creates a Buffer containing the UTF-8-encoded bytes for the string 'tést':
+  // [0x74, 0xc3, 0xa9, 0x73, 0x74] (in hexadecimal notation)
+  // [116, 195, 169, 115, 116] (in decimal notation)
+  const buf6 = Buffer.from('tést');
+
+  // Creates a Buffer containing the Latin-1 bytes [0x74, 0xe9, 0x73, 0x74].
+  const buf7 = Buffer.from('tést', 'latin1');
+  ```
+
+### Buffer.concat(list[, totalLength])
+  - Concatenates a list of Buffer objects into one Buffer. ([Buffer.concat()](https://nodejs.org/docs/latest/api/buffer.html#bufferconcatlist-totallength))
+
+    ```javascript
+    import { Buffer } from 'node:buffer';
+
+    // Create a single `Buffer` from a list of three `Buffer` instances.
+
+    const buf1 = Buffer.alloc(10);
+    const buf2 = Buffer.alloc(14);
+    const buf3 = Buffer.alloc(18);
+    const totalLength = buf1.length + buf2.length + buf3.length;
+
+    console.log(totalLength);
+    // Prints: 42
+
+    const bufA = Buffer.concat([buf1, buf2, buf3], totalLength);
+
+    console.log(bufA);
+    // Prints: <Buffer 00 00 00 00 ...>
+    console.log(bufA.length);
+    // Prints: 42
+    ```
+---
+## File system
+
+- The node:fs module enables interacting with the file system in a way modeled on standard POSIX (Portable Operating System Interface) functions.
+
+- To use the promise-based APIs: ***"import * as fs from 'node:fs/promises';"***
+- Promise-based operations return a promise that is fulfilled when the asynchronous operation is complete.
+
+- To use the callback and sync APIs: ***"import * as fs from 'node:fs';"***
+
+- The callback form takes a completion callback function as its last argument and invokes the operation asynchronously.  
+The arguments passed to the completion callback depend on the method, but the first argument is always reserved for an exception.  
+If the operation is completed successfully, then the first argument is null or undefined.
+
+### filehandle.createWriteStream([options])
+
+- Creates a writable stream to the file referenced by the filehandle. ([filehandle.createWriteStream()](https://nodejs.org/docs/latest/api/fs.html#filehandlecreatewritestreamoptions))
+
+---
+## Stream
+
+- A **stream** is an abstract interface for working with streaming data in Node.js.
+
+- There are many stream objects provided by Node.js. For example, a request to an HTTP server and process.stdout are both stream instances.
+
+- Streams can be readable, writable, or both. All streams are instances of EventEmitter.
+
+- There are four fundamental stream types within Node.js:
+  - **Writable**: streams to which data can be written (for example, fs.createWriteStream()).
+  - **Readable**: streams from which data can be read (for example, fs.createReadStream()).
+  - **Duplex**: streams that are both Readable and Writable (for example, net.Socket).
+  - **Transform**: Duplex streams that can modify or transform the data as it is written and read (for example, zlib.createDeflate()).
+
+### Event: 'data'
+- Emitted when there is data available to be read from the stream. The listener callback function is passed a chunk of data as its first argument.
+
+### Event: 'error'
+- Emitted if there is an error receiving data. The listener callback function is passed an Error object as its first argument.
+
+### Event: 'end'
+- Emitted when there is no more data to be consumed from the stream. The listener callback function is not passed any arguments.
+
+---
+## Path
+
+- The node:path module provides utilities for working with file and directory paths.
+
+### path.basename(path[, suffix])
+
+-  returns the last portion of a path, similar to the Unix basename command.
+
+    ```javascript
+    path.basename('/foo/bar/baz/asdf/quux.html');
+    // Returns: 'quux.html'
+
+    path.basename('/foo/bar/baz/asdf/quux.html', '.html');
+    // Returns: 'quux'
+    ```
+
+### path.dirname(path)
+
+- returns the directory name of a path, similar to the Unix dirname command. Trailing directory separators are ignored.
+
+    ```javascript
+    path.dirname('/foo/bar/baz/asdf/quux');
+    // Returns: '/foo/bar/baz/asdf'
+    ```
+
+### path.extname(path)
+- returns the extension of the path, from the last occurrence of the . (period) character to end of string in the last portion of the path. 
+
+- If there is no . in the last portion of the path, or if there are no . characters other than the first character of the basename of path, an empty string is returned.
+---
