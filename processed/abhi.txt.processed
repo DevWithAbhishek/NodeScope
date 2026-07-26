@@ -1,0 +1,538 @@
+# ROLE
+
+You are acting as a Principal Backend Engineer, Startup CTO, Principal Forward Deployed Engineer (FDE), Staff Software Architect, Product Engineer, Senior Technical Recruiter, and Technical Writer.
+
+Generate ONE COMPLETE PREMIUM HTML ROADMAP.
+
+Title
+
+CareerRadar
+
+"Backend-first Career Intelligence Platform"
+
+This project solves a REAL problem that I currently have.
+
+The roadmap must optimize for
+
+- Fastest working MVP
+- Maximum backend learning
+- Maximum startup interview value
+- Maximum FDE readiness
+- Zero infrastructure cost
+- Production-quality engineering
+
+Do NOT optimize for UI.
+
+Do NOT optimize for animations.
+
+Do NOT optimize for visual design.
+
+The backend architecture is the primary deliverable.
+
+--------------------------------------------------------------------------------
+
+# MY GOAL
+
+I manually monitor more than 100 company career pages.
+
+I miss openings.
+
+I waste several hours every week.
+
+I want an application that automatically detects new software engineering jobs and immediately notifies me.
+
+This should become my strongest backend portfolio project after IMS.
+
+--------------------------------------------------------------------------------
+
+# EXISTING PROJECTS
+
+Kridha already demonstrates
+
+- Marketplace
+- Authentication
+- Payments
+- Transactions
+- Redis
+- REST APIs
+- Documentation
+
+IMS already demonstrates
+
+- Modular Monolith
+- BullMQ
+- Background Workers
+- Redis
+- Notifications
+- Observability
+- Monitoring
+- State Machine
+- Authorization
+- Escalations
+- AI Incident Features
+
+DO NOT recommend features already covered well by these projects.
+
+Instead maximize portfolio breadth.
+
+--------------------------------------------------------------------------------
+
+# PRIMARY OBJECTIVE
+
+Design CareerRadar as a production-ready backend system built in THREE STAGES.
+
+Every stage must produce a usable application.
+
+Each stage should be deployable independently.
+
+Every stage should add significant interview value.
+
+--------------------------------------------------------------------------------
+
+# STAGE 1 (Highest Priority)
+
+Goal
+
+Automatically detect relevant jobs.
+
+Features
+
+- Save companies to monitor
+- Crawl career pages every hour
+- Detect newly posted jobs
+- Detect removed jobs
+- Avoid duplicate notifications
+- Filter only software engineering roles
+- Filter by my skills
+- Send email notifications immediately
+- Dashboard showing detected jobs
+- Dashboard showing crawler health
+- Dashboard showing last crawl status
+- Dashboard showing failed crawls
+- Logging
+- Retry logic
+- Idempotency
+- Observability
+- Docker deployment
+
+This stage should be production-ready.
+
+--------------------------------------------------------------------------------
+
+# STAGE 2
+
+Goal
+
+Application Management System
+
+Features
+
+- Save applications
+- Application Kanban
+- Applied
+- OA
+- Interview
+- Offer
+- Rejected
+- Withdrawn
+
+Store
+
+- Resume used
+- Recruiter
+- HR
+- CTO
+- Notes
+- Interview dates
+- Salary
+- Referral
+- Follow-ups
+- Next action
+
+Analytics
+
+Applications
+
+Interviews
+
+Conversion Rate
+
+Company Statistics
+
+Weekly Report
+
+--------------------------------------------------------------------------------
+
+# STAGE 3
+
+Goal
+
+AI Career Copilot
+
+Features
+
+Resume Optimization
+
+Resume vs JD Matching
+
+Keyword Gap Detection
+
+Resume Score
+
+Interview Preparation
+
+Company Summary
+
+Engineering Blog Summary
+
+Tech Stack Detection
+
+Likely Interview Process
+
+Likely DSA Requirement
+
+Likely System Design Requirement
+
+Expected Difficulty
+
+Generate personalized interview preparation roadmap.
+
+Suggest missing backend topics.
+
+Generate company-specific preparation notes.
+
+Use AI ONLY where it provides genuine engineering value.
+
+Avoid AI gimmicks.
+
+--------------------------------------------------------------------------------
+
+# CONSTRAINTS
+
+Budget
+
+₹0
+
+Everything must use
+
+Open Source
+
+Free Tier
+
+Docker
+
+Local Development
+
+Railway (if available)
+
+Render
+
+Fly.io
+
+Coolify
+
+Neon
+
+Supabase
+
+Turso
+
+Upstash
+
+Cloudflare Free
+
+GitHub Actions
+
+Grafana OSS
+
+Prometheus
+
+OpenTelemetry
+
+GlitchTip
+
+Cron jobs must NOT depend on Vercel Cron.
+
+Recommend the best completely free scheduler.
+
+--------------------------------------------------------------------------------
+
+# REQUIRED SECTIONS
+
+1.
+
+Problem Analysis
+
+2.
+
+Gap Analysis
+
+Compare
+
+Kridha
+
+IMS
+
+CareerRadar
+
+Explain exactly what new backend skills CareerRadar demonstrates.
+
+3.
+
+Stage-by-Stage Architecture
+
+Separate architecture for
+
+Stage 1
+
+Stage 2
+
+Stage 3
+
+4.
+
+Technology Selection
+
+Recommend
+
+Backend
+
+ORM
+
+Database
+
+Queue
+
+Scheduler
+
+Email
+
+Monitoring
+
+Deployment
+
+Authentication
+
+Storage
+
+Logging
+
+Explain WHY.
+
+Mention migration paths.
+
+5.
+
+Career Page Detection Engine
+
+Priority order
+
+Official APIs
+
+RSS
+
+JSON
+
+Structured Data
+
+Sitemap
+
+HTML Parsing
+
+Playwright
+
+Fallback
+
+Teach
+
+Deduplication
+
+Retry
+
+Backoff
+
+Rate Limiting
+
+Change Detection
+
+Job Parsing
+
+6.
+
+Role Detection Engine
+
+Explain
+
+Keyword Matching
+
+Semantic Matching
+
+Embeddings
+
+LLMs
+
+Hybrid Search
+
+Teach how to detect
+
+Backend
+
+Platform
+
+Founding Engineer
+
+Full Stack
+
+DevOps
+
+AI Engineer
+
+SRE
+
+without relying only on title.
+
+7.
+
+Scheduler Design
+
+Compare
+
+BullMQ Repeatable Jobs
+
+node-cron
+
+GitHub Actions
+
+Docker Cron
+
+System Cron
+
+Cloudflare Workers
+
+Render Cron
+
+Railway
+
+pg_cron
+
+Recommend the best free solution.
+
+8.
+
+Backend Architecture
+
+Folder Structure
+
+Modules
+
+Queues
+
+Workers
+
+Database
+
+Caching
+
+Retry
+
+Observability
+
+Logging
+
+Security
+
+Error Handling
+
+Testing
+
+Architecture Diagrams
+
+Sequence Diagrams
+
+Database Diagrams
+
+9.
+
+Interview Analysis
+
+Explain
+
+Backend skills demonstrated
+
+Distributed Systems
+
+Web Crawling
+
+Automation
+
+Observability
+
+Scheduling
+
+Integrations
+
+FDE skills
+
+Startup value
+
+Recruiter value
+
+CTO value
+
+10.
+
+8-Week Implementation Roadmap
+
+Week-by-week.
+
+Optimize for
+
+Fast delivery
+
+High backend quality
+
+Minimal complexity
+
+Maximum interview impact
+
+--------------------------------------------------------------------------------
+
+# OUTPUT
+
+Generate ONLY ONE premium HTML document.
+
+Requirements
+
+Responsive
+
+Dark Mode
+
+Light Mode
+
+Sticky Sidebar
+
+Search
+
+Architecture Diagrams
+
+Sequence Diagrams
+
+Database Diagrams
+
+Folder Structures
+
+Decision Trees
+
+Technology Comparisons
+
+Implementation Checklists
+
+Cheat Sheets
+
+No Markdown.
+
+No interview questions.
+
+No unnecessary frontend discussions.
+
+Focus on building a production-quality backend-first application with incremental delivery.
