@@ -1,8 +1,8 @@
-import express, { type Express, type Request, type Response, type Router, type NextFunction } from "express";
+import express, {type Request, type Response, type Router, type NextFunction } from "express";
 import {pipeline} from "node:stream";
 import fs from "fs";
 import path from "path";
-import { bytes } from "node:stream/consumers";
+import { LineWordCounter } from "../core/streamProcessor.js";
 
 interface Filename {
     name: string
@@ -10,6 +10,7 @@ interface Filename {
 
 const router: Router = express.Router();
 const Upload_Dir = path.join(import.meta.dirname, '..', 'uploads');
+const Processed_Dir = path.join(import.meta.dirname, '..', 'processed');
 
 // Route 1: params demo
 router.get('/:name', (req: Request<Filename>, res: Response) => {
@@ -41,5 +42,24 @@ router.post('/upload', (req: Request, res: Response, next: NextFunction) => {
     writeStream.on('error', (err) => respondOnce(() => next(err)));
 
 });
+
+
+// Route 3: transform stream processing
+router.post('/process/:name', (req: Request<Filename>, res: Response, next: NextFunction) => {
+    const safeName = path.basename(req.params.name);
+    const readStream = fs.createReadStream(path.join(Upload_Dir, safeName));
+
+    const counter = new LineWordCounter();
+    const writeStream = fs.createWriteStream(path.join(Processed_Dir, `${safeName}.processed`));
+
+    pipeline(readStream, counter, writeStream, (err)=> {
+        if (err) return next(err);
+        res.json({
+            file: safeName,
+            lines: counter.lineCount,
+            words: counter.wordCount
+        })
+    })
+})
 
 export default router;
