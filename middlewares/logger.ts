@@ -1,6 +1,6 @@
 import { type Request, type Response, type NextFunction } from 'express';
 import process from "node:process";
-import myEvents  from '../lib/events.js';
+import myEvents from '../core/eventBus.js';
 
 const logger = function (req: Request, res: Response, next: NextFunction) {
     const startedAt = Date.now();
