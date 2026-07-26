@@ -1,14 +1,29 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <h1>
-        Welcome to Dashboard
-    </h1>
-        
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>NodeScope</title>
+  </head>
+  <body>
+    <h1>Welcome to Dashboard</h1>
+    <div id="stats"></div>
+    <script>
+      async function poll() {
+        const res = await fetch("/stats");
+        const data = await res.json();
+        const innerHTMLContent = `
+        <p> Uptime: ${Math.floor(data.uptimeSeconds)}s</p>
+        <p> Heap: ${(data.memory.heapUsed / 1024 / 1024).toFixed(1)}/${(data.memory.heapTotal / 1024 / 1024).toFixed(1)} MB</p>
+        <p>RSS: ${(data.memory.rss / 1024 / 1024).toFixed(1)} MB </p>
+        <p>Load Avg (1m): ${data.cpuLoadAvg[0].toFixed(2)}</p>
+        <p>Requests handled: ${data.requestCount}</p>
+        <p>Event loop lag: ${data.eventLoopLagMs.toFixed(2)} ms </p>
+        `;
+        document.getElementById("stats").innerHTML = innerHTMLContent;
+      }
+      poll();
+      setInterval(poll, 10000);
+    </script>
+  </body>
 </html>
